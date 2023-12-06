@@ -29,6 +29,7 @@ parser.add_argument("--outputmodelname", type=str, default='model.pickle')
 parser.add_argument("--c", type=float, default='1000')
 parser.add_argument("--c2", type=float, default='100')
 parser.add_argument("--tv", type=int, default='1')
+parser.add_argument("--new_data", type=dict, default=None)
 
 parser.add_argument("--d", type=float, default='0.999')
 parser.add_argument("--cth", type=float, default='0')
@@ -156,7 +157,7 @@ def getFeatures(fin):
     #_,xw = aligner.transformWordRep()
     return y,xs
 
-train,valid, test,unlab ,trainu= get_pdtb(params.nlipath,params.dom,params.test_data,params.tv)
+train,valid, test,unlab ,trainu= get_pdtb(params.nlipath,params.dom,params.test_data,params.tv, params.new_data)
 #train['label']=train['label']*0.8+0.1
 #print(train['label'])
 
@@ -175,6 +176,10 @@ elif params.test_data=="yelp":
 elif params.test_data=="movie":
     _,xst= getFeatures(os.path.join(params.nlipath,'movies.txt'))
     _,xsu = getFeatures('dataset/data/movieu.txt')
+
+elif params.test_data=="new":
+    _,xst= getFeatures(os.path.join(params.nlipath,params.new_data.get('s1','twitters.txt')))
+    _,xsu = getFeatures(params.new_data.get('unlab_path','dataset/data/twitteru.txt'))
 
 
 _,xslu= getFeatures(os.path.join(params.nlipath, 'aaai15unlabeled/all.60000.sents'))
