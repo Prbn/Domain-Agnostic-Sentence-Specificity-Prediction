@@ -318,6 +318,7 @@ def update_ema_variables(model, ema_model, alpha, global_step):
 
 def evaluate(epoch, eval_type='valid', final_eval=False):
     kko=open('predictions.txt','w')
+    results_l = []
         
 
     pdtb_net.eval()
@@ -357,10 +358,13 @@ def evaluate(epoch, eval_type='valid', final_eval=False):
         # model forward
         output = pdtb_net2((s1_batch, s1_len),s1_batchf) 
         ou2 = F.softmax(output, dim=1)
-            
+
+        results_b_l = [] 
         for sis in range(output.size(0)):
             kko.write(str(ou2.data[sis,1])+'\n')
+            results_b_l.append(ou2.data[sis,1])
         
+        results_l.append(results_b_l)
         
 
     return 0
