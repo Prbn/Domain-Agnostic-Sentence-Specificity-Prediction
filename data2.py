@@ -85,25 +85,26 @@ def get_nli(data_path):
             'label': target['test']['data']}
     return train, dev, test
     
-def get_pdtb(data_path,dom,dat,tv):
+def get_pdtb(data_path,dom,dat,tv, new_data = None):
     s1 = {}
     s2 = {}
     target = {}
+    new_data = {'s1': 'twitters.txt', 'unlab_path': 'dataset/data/twitteru.txt'} if new_data is None else new_data
     
     targetv = {}
     
     dico_label = {'1': 0,  '2': 1}
     
     for data_type in ['trainu','train','unlab','test']:
-        s1[data_type], s2[data_type], target[data_type],targetv[data_type] = {},{}, {}, {}
+        s1[data_type], s2[data_type], target[data_type], targetv[data_type] = {},{}, {}, {}
     s1['train']['path'] = os.path.join(data_path, 'data.txt')
     
     if dat=='twitter':
         s1['test']['path'] = os.path.join(data_path, 'twitters.txt')
-
         target['test']['path'] = os.path.join(data_path,'twitterl.txt')
         targetv['test']['path'] = 'dataset/data/twitterv.txt'
         s1['unlab']['path'] ='dataset/data/twitteru.txt'
+        
     elif dat=='yelp':
         s1['test']['path'] = os.path.join(data_path, 'yelps.txt')
         target['test']['path'] = os.path.join(data_path,'yelpl.txt')
@@ -115,6 +116,13 @@ def get_pdtb(data_path,dom,dat,tv):
         target['test']['path'] = os.path.join(data_path,'moviel.txt')
         targetv['test']['path'] = 'dataset/data/moviev.txt'
         s1['unlab']['path'] = 'dataset/data/movieu.txt'
+        
+    elif dat=='new':
+        s1['test']['path'] = os.path.join(data_path, new_data['s1'])
+        target['test']['path'] = os.path.join(data_path,'twitterl.txt')
+        targetv['test']['path'] = 'dataset/data/twitterv.txt'
+        s1['unlab']['path'] = new_data['unlab_path']
+
     
     s1['trainu']['path'] = os.path.join(data_path, 'aaai15unlabeled/all.60000.sents')
 
