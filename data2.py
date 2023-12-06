@@ -120,7 +120,7 @@ def get_pdtb(data_path,dom,dat,tv, new_data = None):
     elif dat=='new':
         s1['test']['path'] = os.path.join(data_path, new_data.get('s1','twitters.txt'))
         target['test']['path'] = os.path.join(data_path, new_data.get('target','twitterl.txt'))
-        targetv['test']['path'] = new_data.get('targetv','dataset/data/twitterv.txt'))
+        targetv['test']['path'] = new_data.get('targetv','dataset/data/twitterv.txt')
         s1['unlab']['path'] = new_data.get('unlab_path','dataset/data/twitteru.txt')
 
     
