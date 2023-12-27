@@ -26,7 +26,7 @@ class ModelNewText(object):
         self.test = []
         self.fileid = os.path.basename(filename)
         i = 0
-        with open(filename) as f:
+        with open(filename, encoding='utf8') as f:
             for line in f:
                 if len(line.strip()) == 0: 
                     print(i)

@@ -23,6 +23,7 @@ def get_word_dict(sentences):
     for sent in sentences:
         for word in sent.split():
             if word not in word_dict:
+                # print(word) #qc
                 word_dict[word] = ''
     word_dict['<s>'] = ''
     word_dict['</s>'] = ''
@@ -33,7 +34,7 @@ def get_word_dict(sentences):
 def get_glove(word_dict, glove_path):
     # create word_vec with glove vectors
     word_vec = {}
-    with open(glove_path) as f:
+    with open(glove_path, encoding='utf8') as f:
         for line in f:
             word, vec = line.split(' ', 1)
             if word in word_dict:
@@ -65,11 +66,11 @@ def get_nli(data_path):
                                                  'labels.' + data_type)
 
         s1[data_type]['sent'] = [line.rstrip() for line in
-                                 open(s1[data_type]['path'], 'r')]
+                                 open(s1[data_type]['path'], 'r', encoding='utf8')]
         s2[data_type]['sent'] = [line.rstrip() for line in
-                                 open(s2[data_type]['path'], 'r')]
+                                 open(s2[data_type]['path'], 'r', encoding='utf8')]
         target[data_type]['data'] = np.array([dico_label[line.rstrip('\n')]
-                for line in open(target[data_type]['path'], 'r')])
+                for line in open(target[data_type]['path'], 'r', encoding='utf8')])
 
         assert len(s1[data_type]['sent']) == len(s2[data_type]['sent']) == \
             len(target[data_type]['data'])
@@ -129,21 +130,21 @@ def get_pdtb(data_path,dom,dat,tv, new_data = None):
     target['train']['path'] = os.path.join(data_path,'label.txt')
 
     target['trainu']['path'] = os.path.join(data_path,'aaai15unlabeled/all.60000.spec')
-
-    s1['train']['sent'] = [line.rstrip() for line in open(s1['train']['path'], 'r')]
-    s1['unlab']['sent'] = [line.rstrip() for line in open(s1['unlab']['path'], 'r')]
-    s1['test']['sent'] = [line.rstrip() for line in open(s1['test']['path'], 'r')]
-    s1['trainu']['sent'] = [line.rstrip() for line in open(s1['trainu']['path'], 'r')]
+    # print(s1['test']['path']) #QC
+    s1['train']['sent'] = [line.rstrip() for line in open(s1['train']['path'], 'r', encoding='utf8')]
+    s1['unlab']['sent'] = [line.rstrip() for line in open(s1['unlab']['path'], 'r', encoding='utf8')]
+    s1['test']['sent'] = [line.rstrip() for line in open(s1['test']['path'], 'r', encoding='utf8')]
+    s1['trainu']['sent'] = [line.rstrip() for line in open(s1['trainu']['path'], 'r', encoding='utf8')]
    
     target['train']['data'] = np.array([dico_label[line.rstrip('\n')]
-                for line in open(target['train']['path'], 'r')])
+                for line in open(target['train']['path'], 'r', encoding='utf8')])
     target['test']['data'] = np.array([dico_label[line.rstrip('\n')]
-                for line in open(target['test']['path'], 'r')])
+                for line in open(target['test']['path'], 'r', encoding='utf8')])
 
     targetv['test']['data'] = np.array([float(line.rstrip('\n'))
-                for line in open(targetv['test']['path'], 'r')])
+                for line in open(targetv['test']['path'], 'r', encoding='utf8')])
     target['trainu']['data'] = np.array([int(float(line.rstrip('\n'))>0.5)
-                for line in open(target['trainu']['path'], 'r')])
+                for line in open(target['trainu']['path'], 'r', encoding='utf8')])
     if not (dat=='subso'):   
         assert len(s1['train']['sent'])== len(target['train']['data'])
 
